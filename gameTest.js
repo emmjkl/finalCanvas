@@ -7,13 +7,21 @@ document.body.appendChild(canvas);
 canvas.onclick = function(event){
 	handleClick(event.clientX, event.clientY);
 };
+var balloon = [];
+function Balloon(x, y){
+	this.x = x;
+	this.y = y;
+}
 function handleClick(x, y){
 	var rect = canvas.getBoundingClientRect();
-	balloon.x = (x - 30) - rect.left;
-	balloon.y = (y -30) - rect.top;
+	balloon.x = x - rect.left;
+	balloon.y = y - rect.top;
 if(balloonReady){
 		context.drawImage(balloonImage, balloon.x, balloon.y);
-	}
+		balloon.push(new Balloon(x, y));
+	}for (var i=0; i<balloon.length; i++) {
+			drawBalloon(balloon[i]);
+		}
 	}
 
 var bgReady = false;
@@ -40,7 +48,14 @@ balloonImage.src = "Balloons_01_64x64_Alt_02_006.png";
 var hero = {
 	speed: 256
 };
-var balloon = {};
+/*function Balloon(x, y){
+	this.x = x;
+	this.y = y;
+}*/
+function drawBalloon(Balloon){
+	context.drawImage(balloonImage, balloon.x, balloon.y);
+}
+//var balloon = [];
 var balloonsCollected = 0;
 
 var keysDown = {};
